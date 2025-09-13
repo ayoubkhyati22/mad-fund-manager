@@ -1,0 +1,7 @@
+{
+  "name": "mad-fund-manager",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
