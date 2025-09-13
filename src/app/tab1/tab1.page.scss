@@ -1,0 +1,648 @@
+.dashboard-content {
+  --background: #000000;
+  color: white;
+}
+
+.balance-section {
+  padding: 20px 16px;
+  background: #000000;
+
+  .balance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+
+    .balance-label {
+      color: #888888;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .stats-button {
+      --color: #888888;
+      font-size: 12px;
+
+      ion-icon {
+        margin-right: 4px;
+      }
+    }
+  }
+
+  .balance-amount {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+
+    .currency {
+      color: #ff6b35;
+      font-size: 24px;
+      font-weight: 600;
+      margin-right: 4px;
+    }
+
+    .amount {
+      color: white;
+      font-size: 32px;
+      font-weight: 700;
+      margin-right: 8px;
+    }
+
+    .currency-code {
+      color: #888888;
+      font-size: 14px;
+      margin-right: 8px;
+    }
+
+    ion-icon {
+      color: #888888;
+      font-size: 16px;
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+
+    .action-btn {
+      flex: 1;
+      height: 48px;
+      border-radius: 12px;
+      font-weight: 500;
+
+      ion-icon {
+        margin-right: 6px;
+      }
+
+      &.transfer-btn {
+        --background: #333333;
+        --color: white;
+
+        ion-icon {
+          color: white;
+        }
+      }
+
+      &.request-btn {
+        --background: #333333;
+        --color: white;
+
+        ion-icon {
+          color: white;
+        }
+      }
+    }
+  }
+
+  .recent-transaction-card {
+    background: linear-gradient(135deg, #ff6b35 0%, #ff8a50 100%);
+    border-radius: 16px;
+    padding: 16px;
+    position: relative;
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+
+      .card-title {
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .user-avatars {
+        display: flex;
+        margin-left: auto;
+
+        .avatar {
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+          margin-left: -4px;
+          border: 2px solid white;
+
+          &.avatar-1 {
+            background: #4285f4;
+          }
+
+          &.avatar-2 {
+            background: #34a853;
+          }
+
+          &.avatar-3 {
+            background: #fbbc05;
+          }
+
+          &.avatar-4 {
+            background: #ea4335;
+          }
+
+          &.avatar-5 {
+            background: #9aa0a6;
+          }
+        }
+      }
+    }
+
+    .get-plan-btn {
+      --color: white;
+      font-size: 14px;
+      font-weight: 500;
+      position: absolute;
+      bottom: 12px;
+      left: 16px;
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
+
+.transactions-section {
+  background: white;
+  border-radius: 24px 24px 0 0;
+  margin-top: 20px;
+  padding: 24px 16px;
+  min-height: calc(100vh - 400px);
+
+  .section-title {
+    color: #000000;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-top: 0;
+  }
+
+  .date-section {
+    margin-bottom: 32px;
+
+    .date-header {
+      color: #6b7280;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .transaction-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid #f5f5f5;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .transaction-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 12px;
+        font-size: 20px;
+        background: #f8fafc;
+
+        &.car-icon {
+          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+        }
+
+        &.jewelry-icon {
+          background: linear-gradient(135deg, #db2777 0%, #ec4899 100%);
+        }
+
+        &.bike-icon {
+          background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        }
+
+        &.travel-icon {
+          background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+        }
+
+        &.house-icon {
+          background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+        }
+
+        &.savings-icon {
+          background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+        }
+      }
+
+      .transaction-details {
+        flex: 1;
+
+        h4 {
+          color: #000000;
+          font-size: 16px;
+          font-weight: 600;
+          margin: 0 0 4px 0;
+        }
+
+        p {
+          color: #888888;
+          font-size: 12px;
+          margin: 0;
+        }
+      }
+
+      .transaction-amount {
+        text-align: right;
+        font-size: 16px;
+        font-weight: 600;
+
+        &.negative {
+          color: #dc2626;
+        }
+
+        &.positive {
+          color: #059669;
+        }
+
+        .status {
+          display: block;
+          color: #888888;
+          font-size: 12px;
+          font-weight: 400;
+          margin-top: 4px;
+        }
+      }
+    }
+  }
+
+  .banks-summary-section {
+    margin-top: 20px;
+    padding-top: 18px;
+    .bank-list {
+      .bank-item {
+        background: #ffffff;
+        border-radius: 16px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        border: 1px solid #f0f0f0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .bank-header {
+          display: flex;
+          align-items: center;
+          padding: 20px;
+          border-bottom: 1px solid #f5f5f5;
+
+          .bank-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            font-weight: 700;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+            &.cih-icon {
+              background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+              color: white;
+            }
+
+            &.bp-icon {
+              background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+              color: white;
+            }
+
+            &.cfg-icon {
+              background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+              color: white;
+            }
+          }
+
+          .bank-details {
+            flex: 1;
+
+            h4 {
+              color: #000000;
+              font-size: 18px;
+              font-weight: 600;
+              margin: 0 0 4px 0;
+            }
+
+            p {
+              color: #6b7280;
+              font-size: 13px;
+              margin: 0;
+            }
+          }
+
+          .bank-amount {
+            text-align: right;
+            font-size: 18px;
+            font-weight: 700;
+
+            &.positive {
+              color: #059669;
+            }
+
+            .status {
+              display: block;
+              color: #6b7280;
+              font-size: 12px;
+              font-weight: 400;
+              margin-top: 2px;
+            }
+          }
+        }
+
+        .objectives-container {
+          padding: 20px;
+          background: #fafafa;
+
+          .objective-item {
+            margin-bottom: 20px;
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+
+            .objective-header {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 8px;
+
+              .objective-info {
+                display: flex;
+                align-items: center;
+                flex: 1;
+
+                .objective-icon {
+                  width: 32px;
+                  height: 32px;
+                  border-radius: 8px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin-right: 12px;
+                  font-size: 16px;
+
+                  &.trip {
+                    background: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 100%);
+                    color: white;
+                  }
+
+                  &.car {
+                    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+                    color: white;
+                  }
+
+                  &.house {
+                    background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+                    color: white;
+                  }
+
+                  &.savings {
+                    background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+                    color: white;
+                  }
+
+                  &.jewelry {
+                    background: linear-gradient(135deg, #db2777 0%, #ec4899 100%);
+                    color: white;
+                  }
+
+                  &.bike {
+                    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+                    color: white;
+                  }
+
+                  &.tech {
+                    background: linear-gradient(135deg, #374151 0%, #6b7280 100%);
+                    color: white;
+                  }
+
+                  &.education {
+                    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+                    color: white;
+                  }
+
+                  &.health {
+                    background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+                    color: white;
+                  }
+                }
+
+                .objective-details {
+                  display: flex;
+                  flex-direction: column;
+
+                  .objective-name {
+                    color: #000000;
+                    font-size: 14px;
+                    font-weight: 600;
+                    margin-bottom: 2px;
+                  }
+
+                  .objective-progress-text {
+                    color: #6b7280;
+                    font-size: 12px;
+                  }
+                }
+              }
+
+              .objective-percentage {
+                color: gray;
+                font-size: 14px;
+                font-weight: 700;
+                min-width: 40px;
+                text-align: right;
+              }
+            }
+
+            .progress-bar {
+              height: 6px;
+              background: #e5e7eb;
+              border-radius: 3px;
+              overflow: hidden;
+              position: relative;
+
+              .progress-fill {
+                height: 100%;
+                border-radius: 3px;
+                transition: width 0.3s ease;
+                position: relative;
+
+                &::after {
+                  content: '';
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  right: 0;
+                  bottom: 0;
+                  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+                  animation: shimmer 2s infinite;
+                }
+
+                &.trip-progress {
+                  background: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 100%);
+                }
+
+                &.car-progress {
+                  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+                }
+
+                &.house-progress {
+                  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+                }
+
+                &.savings-progress {
+                  background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+                }
+
+                &.jewelry-progress {
+                  background: linear-gradient(135deg, #db2777 0%, #ec4899 100%);
+                }
+
+                &.bike-progress {
+                  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+                }
+
+                &.tech-progress {
+                  background: linear-gradient(135deg, #374151 0%, #6b7280 100%);
+                }
+
+                &.education-progress {
+                  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+                }
+
+                &.health-progress {
+                  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// Dark mode adjustments for ion-header
+ion-header {
+  ion-toolbar {
+    --background: #000000;
+    --color: white;
+  }
+}
+
+// Override ion-content background
+ion-content {
+  --background: #000000;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .transactions-section {
+    .date-section {
+      .transaction-item {
+        .transaction-icon {
+          width: 40px;
+          height: 40px;
+          font-size: 18px;
+          margin-right: 10px;
+        }
+
+        .transaction-details {
+          h4 {
+            font-size: 15px;
+          }
+
+          p {
+            font-size: 11px;
+          }
+        }
+
+        .transaction-amount {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .banks-summary-section {
+      .bank-list {
+        .bank-item {
+          .bank-header {
+            padding: 16px;
+
+            .bank-icon {
+              width: 48px;
+              height: 48px;
+              font-size: 16px;
+              margin-right: 12px;
+            }
+
+            .bank-details h4 {
+              font-size: 16px;
+            }
+
+            .bank-amount {
+              font-size: 16px;
+            }
+          }
+
+          .objectives-container {
+            padding: 16px;
+
+            .objective-item {
+              .objective-header {
+                .objective-info {
+                  .objective-icon {
+                    width: 28px;
+                    height: 28px;
+                    font-size: 14px;
+                    margin-right: 10px;
+                  }
+
+                  .objective-details {
+                    .objective-name {
+                      font-size: 13px;
+                    }
+
+                    .objective-progress-text {
+                      font-size: 11px;
+                    }
+                  }
+                }
+
+                .objective-percentage {
+                  font-size: 13px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
