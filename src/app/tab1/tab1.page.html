@@ -7,207 +7,82 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="dashboard-content">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tableau de bord</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="content-wrapper">
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">Tableau de bord</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-  <!-- Balance Section -->
-  <div class="balance-section">
-    <div class="balance-header">
-      <span class="balance-label">My Balance</span>
-      <ion-button fill="clear" size="small" class="stats-button">
-        <ion-icon name="stats-chart" slot="start"></ion-icon>
-        Statistics
-      </ion-button>
+    <!-- Balance Section -->
+    <div class="balance-section">
+      <div class="balance-header">
+        <span class="balance-label">My Balance</span>
+        <ion-button fill="clear" size="small" class="stats-button">
+          <ion-icon name="stats-chart" slot="start"></ion-icon>
+          Statistics
+        </ion-button>
+      </div>
+
+      <div class="balance-amount">
+        <span class="amount">{{ getTotalBalance() | number:'1.2-2' }}</span>
+        <span class="currency-code">MAD</span>
+      </div>
     </div>
 
-    <div class="balance-amount">
-      <span class="amount">187,510.00</span>
-      <span class="currency-code">MAD</span>
-    </div>
-  </div>
+    <!-- Transactions Section -->
+    <div class="transactions-section">
+      <!-- Banks Summary Section -->
+      <div class="banks-summary-section">
+        <h3 class="section-title">Banks Summary</h3>
 
-  <!-- Transactions Section -->
-  <div class="transactions-section">
-    <!-- Banks Summary Section -->
-    <div class="banks-summary-section">
-      <h3 class="section-title">Banks Summary</h3>
+        <div class="bank-list">
+          <div class="bank-item" *ngFor="let bank of banks; trackBy: trackByBankId" [class.expanded]="bank.isExpanded">
+            <!-- Clickable Bank Header -->
+            <div class="bank-header" (click)="toggleBank(bank)">
+              <div class="bank-icon" [ngClass]="getBankIconClass(bank.id)">
+                <span>{{ bank.icon }}</span>
+              </div>
+              <div class="bank-details">
+                <h4>{{ bank.name }}</h4>
+                <p>{{ bank.accountType }}</p>
+              </div>
+              <div class="bank-amount positive">
+                {{ bank.balance | number:'1.2-2' }}
+                <span class="status">MAD</span>
+              </div>
+              <ion-icon
+                [name]="bank.isExpanded ? 'chevron-up' : 'chevron-down'"
+                class="expand-icon">
+              </ion-icon>
+            </div>
 
-      <div class="bank-list">
-        <!-- CIH Bank -->
-        <div class="bank-item">
-          <div class="bank-header">
-            <div class="bank-icon cih-icon">
-              <span>CIH</span>
-            </div>
-            <div class="bank-details">
-              <h4>CIH Bank</h4>
-              <p>Personal Account</p>
-            </div>
-            <div class="bank-amount positive">
-              182,500.00
-              <span class="status">MAD</span>
-            </div>
-          </div>
-
-          <!-- CIH Objectives -->
-          <div class="objectives-container">
-            <div class="objective-item">
-              <div class="objective-header">
-                <div class="objective-info">
-                  <ion-icon name="airplane" class="objective-icon trip"></ion-icon>
-                  <div class="objective-details">
-                    <span class="objective-name">Voyage Fund</span>
-                    <span class="objective-progress-text">2,500 MAD / 10,000 MAD</span>
+            <!-- Objectives (shown/hidden based on isExpanded) -->
+            <div class="objectives-container" *ngIf="bank.isExpanded">
+              <div class="objective-item" *ngFor="let objective of bank.objectives; trackBy: trackByObjectiveId">
+                <div class="objective-header">
+                  <div class="objective-info">
+                    <ion-icon [name]="objective.icon" [class]="'objective-icon ' + objective.iconClass"></ion-icon>
+                    <div class="objective-details">
+                      <span class="objective-name">{{ objective.name }}</span>
+                      <span class="objective-progress-text">
+                        {{ objective.currentAmount | number:'1.0-0' }} MAD / {{ objective.targetAmount | number:'1.0-0' }} MAD
+                      </span>
+                    </div>
+                  </div>
+                  <span class="objective-percentage">{{ getObjectiveProgress(objective) }}%</span>
+                </div>
+                <div class="progress-bar">
+                  <div
+                    class="progress-fill"
+                    [ngClass]="objective.progressClass"
+                    [style.width.%]="getObjectiveProgress(objective)">
                   </div>
                 </div>
-                <span class="objective-percentage">25%</span>
-              </div>
-              <div class="progress-bar">
-                <div class="progress-fill trip-progress" style="width: 25%"></div>
-              </div>
-            </div>
-
-            <div class="objective-item">
-              <div class="objective-header">
-                <div class="objective-info">
-                  <ion-icon name="home" class="objective-icon house"></ion-icon>
-                  <div class="objective-details">
-                    <span class="objective-name">Appartement Fund</span>
-                    <span class="objective-progress-text">40,000 MAD / 200,000 MAD</span>
-                  </div>
-                </div>
-                <span class="objective-percentage">20%</span>
-              </div>
-              <div class="progress-bar">
-                <div class="progress-fill house-progress" style="width: 20%"></div>
-              </div>
-            </div>
-
-            <div class="objective-item">
-              <div class="objective-header">
-                <div class="objective-info">
-                  <ion-icon name="wallet" class="objective-icon savings"></ion-icon>
-                  <div class="objective-details">
-                    <span class="objective-name">Épargne Goal</span>
-                    <span class="objective-progress-text">50,000 MAD / 100,000 MAD</span>
-                  </div>
-                </div>
-                <span class="objective-percentage">50%</span>
-              </div>
-              <div class="progress-bar">
-                <div class="progress-fill savings-progress" style="width: 50%"></div>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- Banque Populaire -->
-        <div class="bank-item">
-          <div class="bank-header">
-            <div class="bank-icon bp-icon">
-              <span>BP</span>
-            </div>
-            <div class="bank-details">
-              <h4>Banque Populaire</h4>
-              <p>Current Account</p>
-            </div>
-            <div class="bank-amount positive">
-              4,010.00
-              <span class="status">MAD</span>
-            </div>
-          </div>
-
-          <!-- BP Objectives -->
-          <div class="objectives-container">
-            <div class="objective-item">
-              <div class="objective-header">
-                <div class="objective-info">
-                  <ion-icon name="car-sport" class="objective-icon car"></ion-icon>
-                  <div class="objective-details">
-                    <span class="objective-name">Voiture Maintenance</span>
-                    <span class="objective-progress-text">1 MAD / 5,000 MAD</span>
-                  </div>
-                </div>
-                <span class="objective-percentage">0.02%</span>
-              </div>
-              <div class="progress-bar">
-                <div class="progress-fill car-progress" style="width: 0.02%"></div>
-              </div>
-            </div>
-
-            <div class="objective-item">
-              <div class="objective-header">
-                <div class="objective-info">
-                  <ion-icon name="diamond" class="objective-icon jewelry"></ion-icon>
-                  <div class="objective-details">
-                    <span class="objective-name">Special Purchase (WL)</span>
-                    <span class="objective-progress-text">4,000 MAD / 4,000 MAD</span>
-                  </div>
-                </div>
-                <span class="objective-percentage">100%</span>
-              </div>
-              <div class="progress-bar">
-                <div class="progress-fill jewelry-progress" style="width: 100%"></div>
-              </div>
-            </div>
-
-            <div class="objective-item">
-              <div class="objective-header">
-                <div class="objective-info">
-                  <ion-icon name="bicycle" class="objective-icon bike"></ion-icon>
-                  <div class="objective-details">
-                    <span class="objective-name">Vélo Fund</span>
-                    <span class="objective-progress-text">1 MAD / 2,000 MAD</span>
-                  </div>
-                </div>
-                <span class="objective-percentage">0.05%</span>
-              </div>
-              <div class="progress-bar">
-                <div class="progress-fill bike-progress" style="width: 0.05%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- CFG Bank -->
-        <div class="bank-item">
-          <div class="bank-header">
-            <div class="bank-icon bp-icon">
-              <span>CFG</span>
-            </div>
-            <div class="bank-details">
-              <h4>CFG Bank</h4>
-              <p>Current Account</p>
-            </div>
-            <div class="bank-amount positive">
-              1,000.00
-              <span class="status">MAD</span>
-            </div>
-          </div>
-
-          <!-- cfg Objectives -->
-          <div class="objectives-container">
-            <div class="objective-item">
-              <div class="objective-header">
-                <div class="objective-info">
-                  <ion-icon name="car-sport" class="objective-icon car"></ion-icon>
-                  <div class="objective-details">
-                    <span class="objective-name">La bourse</span>
-                    <span class="objective-progress-text">1000 MAD / 100,000 MAD</span>
-                  </div>
-                </div>
-                <span class="objective-percentage">0.01%</span>
-              </div>
-              <div class="progress-bar">
-                <div class="progress-fill car-progress" style="width: 0.02%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>

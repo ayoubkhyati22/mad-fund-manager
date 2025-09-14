@@ -169,7 +169,7 @@
   border-radius: 24px 24px 0 0;
   margin-top: 20px;
   padding: 24px 16px;
-  min-height: calc(100vh - 400px);
+  min-height: calc(120vh - 400px);
 
   .section-title {
     color: #000000;
@@ -279,8 +279,9 @@
   }
 
   .banks-summary-section {
-    margin-top: 20px;
-    padding-top: 18px;
+    margin-top: 6px;
+    padding-top: 2px;
+
     .bank-list {
       .bank-item {
         background: #ffffff;
@@ -296,11 +297,26 @@
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
         }
 
+        &.expanded {
+          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+
+          .bank-header {
+            background: #f8fafc;
+          }
+        }
+
         .bank-header {
           display: flex;
           align-items: center;
           padding: 20px;
           border-bottom: 1px solid #f5f5f5;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          position: relative;
+
+          &:hover {
+            background: #f8fafc;
+          }
 
           .bank-icon {
             width: 56px;
@@ -351,6 +367,7 @@
             text-align: right;
             font-size: 18px;
             font-weight: 700;
+            margin-right: 12px;
 
             &.positive {
               color: #059669;
@@ -364,11 +381,18 @@
               margin-top: 2px;
             }
           }
+
+          .expand-icon {
+            color: #6b7280;
+            font-size: 20px;
+            transition: transform 0.3s ease;
+          }
         }
 
         .objectives-container {
           padding: 20px;
           background: #fafafa;
+          animation: slideInOut 0.3s ease-in-out;
 
           .objective-item {
             margin-bottom: 20px;
@@ -536,6 +560,19 @@
         }
       }
     }
+  }
+}
+
+@keyframes slideInOut {
+  0% {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    max-height: 1000px;
+    transform: translateY(0);
   }
 }
 

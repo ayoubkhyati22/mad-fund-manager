@@ -1,17 +1,274 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
+    <ion-title>Gestion</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="forms-content">
+  <div class="content-wrapper">
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">Gestion</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+    <!-- Section Ajouter une Banque -->
+    <div class="accordion-section">
+      <div class="accordion-header" (click)="toggleSection('addBank')" [class.expanded]="sections.addBank">
+        <div class="header-content">
+          <ion-icon name="business" class="section-icon"></ion-icon>
+          <h2>Ajouter une Banque</h2>
+        </div>
+        <ion-icon [name]="sections.addBank ? 'chevron-up' : 'chevron-down'" class="expand-icon"></ion-icon>
+      </div>
+
+      <div class="accordion-content" *ngIf="sections.addBank">
+        <form [formGroup]="bankForm" (ngSubmit)="onSubmitBank()" class="custom-form">
+          <ion-item class="form-item">
+            <ion-label position="stacked">Nom de la banque *</ion-label>
+            <ion-input
+              formControlName="name"
+              placeholder="Ex: CIH Bank"
+              [class.error]="bankFormControls['name'].invalid && bankFormControls['name'].touched">
+            </ion-input>
+            <ion-note slot="error" *ngIf="bankFormControls['name'].invalid && bankFormControls['name'].touched">
+              Le nom est requis (min. 2 caractères)
+            </ion-note>
+          </ion-item>
+
+          <ion-item class="form-item">
+            <ion-label position="stacked">Solde initial (MAD) *</ion-label>
+            <ion-input
+              formControlName="balance"
+              type="number"
+              placeholder="0.00"
+              [class.error]="bankFormControls['balance'].invalid && bankFormControls['balance'].touched">
+            </ion-input>
+            <ion-note slot="error" *ngIf="bankFormControls['balance'].invalid && bankFormControls['balance'].touched">
+              Le solde doit être positif
+            </ion-note>
+          </ion-item>
+
+          <ion-item class="form-item">
+            <ion-label position="stacked">Type de compte *</ion-label>
+            <ion-select
+              formControlName="accountType"
+              placeholder="Sélectionner le type"
+              [class.error]="bankFormControls['accountType'].invalid && bankFormControls['accountType'].touched">
+              <ion-select-option *ngFor="let type of accountTypes" [value]="type">
+                {{ type }}
+              </ion-select-option>
+            </ion-select>
+            <ion-note slot="error" *ngIf="bankFormControls['accountType'].invalid && bankFormControls['accountType'].touched">
+              Veuillez sélectionner un type de compte
+            </ion-note>
+          </ion-item>
+
+          <ion-item class="form-item">
+            <ion-label position="stacked">Sigle (max. 5 caractères) *</ion-label>
+            <ion-input
+              formControlName="icon"
+              placeholder="Ex: CIH"
+              maxlength="5"
+              [class.error]="bankFormControls['icon'].invalid && bankFormControls['icon'].touched">
+            </ion-input>
+            <ion-note slot="error" *ngIf="bankFormControls['icon'].invalid && bankFormControls['icon'].touched">
+              Le sigle est requis (max. 5 caractères)
+            </ion-note>
+          </ion-item>
+
+          <ion-button
+            expand="block"
+            type="submit"
+            class="submit-btn bank-btn"
+            [disabled]="!bankForm.valid">
+            <ion-icon name="add-circle" slot="start"></ion-icon>
+            Ajouter la Banque
+          </ion-button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Section Ajouter un Objectif -->
+    <div class="accordion-section">
+      <div class="accordion-header" (click)="toggleSection('addObjective')" [class.expanded]="sections.addObjective">
+        <div class="header-content">
+          <ion-icon name="flag" class="section-icon"></ion-icon>
+          <h2>Ajouter un Objectif</h2>
+        </div>
+        <ion-icon [name]="sections.addObjective ? 'chevron-up' : 'chevron-down'" class="expand-icon"></ion-icon>
+      </div>
+
+      <div class="accordion-content" *ngIf="sections.addObjective">
+        <form [formGroup]="objectiveForm" (ngSubmit)="onSubmitObjective()" class="custom-form">
+          <ion-item class="form-item">
+            <ion-label position="stacked">Nom de l'objectif *</ion-label>
+            <ion-input
+              formControlName="name"
+              placeholder="Ex: Voyage à Paris"
+              [class.error]="objectiveFormControls['name'].invalid && objectiveFormControls['name'].touched">
+            </ion-input>
+            <ion-note slot="error" *ngIf="objectiveFormControls['name'].invalid && objectiveFormControls['name'].touched">
+              Le nom est requis (min. 2 caractères)
+            </ion-note>
+          </ion-item>
+
+          <ion-item class="form-item">
+            <ion-label position="stacked">Montant actuel (MAD) *</ion-label>
+            <ion-input
+              formControlName="currentAmount"
+              type="number"
+              placeholder="0"
+              [class.error]="objectiveFormControls['currentAmount'].invalid && objectiveFormControls['currentAmount'].touched">
+            </ion-input>
+            <ion-note slot="error" *ngIf="objectiveFormControls['currentAmount'].invalid && objectiveFormControls['currentAmount'].touched">
+              Le montant actuel doit être positif ou zéro
+            </ion-note>
+          </ion-item>
+
+          <ion-item class="form-item">
+            <ion-label position="stacked">Montant cible (MAD) *</ion-label>
+            <ion-input
+              formControlName="targetAmount"
+              type="number"
+              placeholder="10000"
+              [class.error]="objectiveFormControls['targetAmount'].invalid && objectiveFormControls['targetAmount'].touched">
+            </ion-input>
+            <ion-note slot="error" *ngIf="objectiveFormControls['targetAmount'].invalid && objectiveFormControls['targetAmount'].touched">
+              Le montant cible doit être supérieur à 0
+            </ion-note>
+          </ion-item>
+
+          <ion-item class="form-item">
+            <ion-label position="stacked">Banque associée *</ion-label>
+            <ion-select
+              formControlName="bankId"
+              placeholder="Sélectionner la banque"
+              [class.error]="objectiveFormControls['bankId'].invalid && objectiveFormControls['bankId'].touched">
+              <ion-select-option *ngFor="let bank of banks" [value]="bank.id">
+                {{ bank.name }} ({{ bank.icon }})
+              </ion-select-option>
+            </ion-select>
+            <ion-note slot="error" *ngIf="objectiveFormControls['bankId'].invalid && objectiveFormControls['bankId'].touched">
+              Veuillez sélectionner une banque
+            </ion-note>
+          </ion-item>
+
+          <ion-item class="form-item">
+            <ion-label position="stacked">Catégorie *</ion-label>
+            <ion-select
+              formControlName="iconType"
+              placeholder="Sélectionner la catégorie"
+              [class.error]="objectiveFormControls['iconType'].invalid && objectiveFormControls['iconType'].touched">
+              <ion-select-option *ngFor="let iconOption of objectiveIcons" [value]="iconOption.name">
+                <div class="select-option">
+                  <ion-icon [name]="iconOption.name"></ion-icon>
+                  {{ iconOption.label }}
+                </div>
+              </ion-select-option>
+            </ion-select>
+            <ion-note slot="error" *ngIf="objectiveFormControls['iconType'].invalid && objectiveFormControls['iconType'].touched">
+              Veuillez sélectionner une catégorie
+            </ion-note>
+          </ion-item>
+
+          <ion-button
+            expand="block"
+            type="submit"
+            class="submit-btn objective-btn"
+            [disabled]="!objectiveForm.valid">
+            <ion-icon name="flag" slot="start"></ion-icon>
+            Ajouter l'Objectif
+          </ion-button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Section Liste des Banques -->
+    <div class="accordion-section" *ngIf="banks.length > 0">
+      <div class="accordion-header" (click)="toggleSection('bankList')" [class.expanded]="sections.bankList">
+        <div class="header-content">
+          <ion-icon name="list" class="section-icon"></ion-icon>
+          <h2>Mes Banques ({{ banks.length }})</h2>
+        </div>
+        <ion-icon [name]="sections.bankList ? 'chevron-up' : 'chevron-down'" class="expand-icon"></ion-icon>
+      </div>
+
+      <div class="accordion-content" *ngIf="sections.bankList">
+        <div class="items-list">
+          <ion-card *ngFor="let bank of banks" class="item-card bank-card">
+            <ion-card-content>
+              <div class="item-header">
+                <div class="item-info">
+                  <div class="item-icon bank-icon-display">{{ bank.icon }}</div>
+                  <div class="item-details">
+                    <h3>{{ bank.name }}</h3>
+                    <p>{{ bank.accountType }}</p>
+                    <p class="balance">{{ bank.balance | number:'1.2-2' }} MAD</p>
+                  </div>
+                </div>
+                <ion-button
+                  fill="clear"
+                  color="danger"
+                  (click)="deleteBank(bank.id)"
+                  class="delete-btn">
+                  <ion-icon name="trash" slot="icon-only"></ion-icon>
+                </ion-button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Liste des Objectifs -->
+    <div class="accordion-section" *ngIf="objectives.length > 0">
+      <div class="accordion-header" (click)="toggleSection('objectiveList')" [class.expanded]="sections.objectiveList">
+        <div class="header-content">
+          <ion-icon name="list" class="section-icon"></ion-icon>
+          <h2>Mes Objectifs ({{ objectives.length }})</h2>
+        </div>
+        <ion-icon [name]="sections.objectiveList ? 'chevron-up' : 'chevron-down'" class="expand-icon"></ion-icon>
+      </div>
+
+      <div class="accordion-content" *ngIf="sections.objectiveList">
+        <div class="items-list">
+          <ion-card *ngFor="let objective of objectives" class="item-card objective-card">
+            <ion-card-content>
+              <div class="item-header">
+                <div class="item-info">
+                  <div class="item-icon objective-icon-display" [ngClass]="objective.iconClass">
+                    <ion-icon [name]="objective.icon"></ion-icon>
+                  </div>
+                  <div class="item-details">
+                    <h3>{{ objective.name }}</h3>
+                    <p>{{ getBankName(objective.bankId) }}</p>
+                    <p class="progress-text">{{ objective.currentAmount | number:'1.0-0' }} / {{ objective.targetAmount | number:'1.0-0' }} MAD</p>
+                    <div class="progress-container">
+                      <div class="progress-bar">
+                        <div
+                          class="progress-fill"
+                          [ngClass]="objective.progressClass"
+                          [style.width.%]="getObjectiveProgress(objective)">
+                        </div>
+                      </div>
+                      <span class="progress-percentage">{{ getObjectiveProgress(objective) }}%</span>
+                    </div>
+                  </div>
+                </div>
+                <ion-button
+                  fill="clear"
+                  color="danger"
+                  (click)="deleteObjective(objective.id)"
+                  class="delete-btn">
+                  <ion-icon name="trash" slot="icon-only"></ion-icon>
+                </ion-button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </ion-content>
